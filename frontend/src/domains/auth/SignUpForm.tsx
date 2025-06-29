@@ -2,7 +2,7 @@ import { Gamepad, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useCallback } from "react";
 import { z } from "zod";
@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import api from "@/core/api";
+import { toast } from "sonner";
 
 interface ResponseErrorData {
   email?: string;
@@ -47,6 +48,8 @@ export function SignUpForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const navigate = useNavigate();
+
   const signUpForm = useForm({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
@@ -65,8 +68,11 @@ export function SignUpForm({
           username: values.username,
           password: values.password,
         })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
+          toast.success("SignUp success", {
+            description: "Registration complete, start play!",
+          });
+          navigate("/");
         })
         .catch(
           (error: {
