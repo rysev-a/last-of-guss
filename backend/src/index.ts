@@ -1,54 +1,26 @@
 import process from "node:process";
 
-import fastify from "fastify";
-const server = fastify();
-import { PrismaClient } from "./generated/client";
+import Fastify from "fastify";
+import fastifyJwt from "@fastify/jwt";
 
-const prisma = new PrismaClient();
-import { faker } from "@faker-js/faker";
-import { map, range, zip } from "rambda";
+import { initDatabaseConnection } from "./core/database";
+import auth from "./controllers/auth";
+import dev from "./controllers/dev";
+import game from "./controllers/game";
 
 process.loadEnvFile(".env");
 
-async function initDatabaseConnection(): Promise<PrismaClient> {
-  const db = new PrismaClient();
-  await db.$connect();
-  return db;
-}
+const fastify = Fastify({ logger: process.env.LOGGING === "true" });
 
-server.get("/ping", async (request, reply) => {
-  return { message: "response" };
-});
+fastify.register(fastifyJwt, { secret: process.env.SECRET_KEY as string });
 
-server.get("/reset", async (req, res) => {
-  await prisma.user.deleteMany();
-  const emails = faker.helpers.uniqueArray(faker.internet.email, 1000);
-  const names = faker.helpers.uniqueArray(faker.person.firstName, 1000);
+fastify.register(auth, { prefix: "/api/v1/auth" });
+fastify.register(dev, { prefix: "/api/v1/dev" });
+fastify.register(game);
 
-  const users = zip(emails)(names).map(([email, name]) => {
-    return {
-      name,
-      email,
-      password: faker.internet.password({ length: 10 }),
-    };
-  });
-
-  await prisma.user.createMany({ data: users });
-
-  return { message: "success" };
-});
-
-server.get("/users", async (req, res) => {
-  const users = await prisma.user.findMany();
-  return users.map((user) => ({
-    id: user.id,
-    email: user.email,
-    name: user.name,
-  }));
-});
-
-server.listen({ port: 8080 }, async (err, address) => {
+fastify.listen({ port: 8080 }, async (err, address) => {
   await initDatabaseConnection();
+
   console.log(`Connect to database success`);
 
   if (err) {

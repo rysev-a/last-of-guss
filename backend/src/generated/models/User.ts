@@ -26,21 +26,21 @@ export type AggregateUser = {
 export type UserMinAggregateOutputType = {
   id: string | null
   email: string | null
-  name: string | null
+  username: string | null
   password: string | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
   email: string | null
-  name: string | null
+  username: string | null
   password: string | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
   email: number
-  name: number
+  username: number
   password: number
   _all: number
 }
@@ -49,21 +49,21 @@ export type UserCountAggregateOutputType = {
 export type UserMinAggregateInputType = {
   id?: true
   email?: true
-  name?: true
+  username?: true
   password?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
   email?: true
-  name?: true
+  username?: true
   password?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
   email?: true
-  name?: true
+  username?: true
   password?: true
   _all?: true
 }
@@ -143,7 +143,7 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserGroupByOutputType = {
   id: string
   email: string
-  name: string
+  username: string
   password: string
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
@@ -171,7 +171,7 @@ export type UserWhereInput = {
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
-  name?: Prisma.StringFilter<"User"> | string
+  username?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
   taps?: Prisma.TapListRelationFilter
   games?: Prisma.GameListRelationFilter
@@ -181,7 +181,7 @@ export type UserWhereInput = {
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   password?: Prisma.SortOrder
   taps?: Prisma.TapOrderByRelationAggregateInput
   games?: Prisma.GameOrderByRelationAggregateInput
@@ -191,7 +191,7 @@ export type UserOrderByWithRelationInput = {
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
-  name?: string
+  username?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -199,12 +199,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   taps?: Prisma.TapListRelationFilter
   games?: Prisma.GameListRelationFilter
   roles?: Prisma.UsersOnRolesListRelationFilter
-}, "id" | "email" | "name">
+}, "id" | "email" | "username">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   password?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -217,14 +217,14 @@ export type UserScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
-  name?: Prisma.StringWithAggregatesFilter<"User"> | string
+  username?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
 }
 
 export type UserCreateInput = {
   id?: string
   email: string
-  name: string
+  username: string
   password: string
   taps?: Prisma.TapCreateNestedManyWithoutUserInput
   games?: Prisma.GameCreateNestedManyWithoutUserInput
@@ -234,7 +234,7 @@ export type UserCreateInput = {
 export type UserUncheckedCreateInput = {
   id?: string
   email: string
-  name: string
+  username: string
   password: string
   taps?: Prisma.TapUncheckedCreateNestedManyWithoutUserInput
   games?: Prisma.GameUncheckedCreateNestedManyWithoutUserInput
@@ -244,7 +244,7 @@ export type UserUncheckedCreateInput = {
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   taps?: Prisma.TapUpdateManyWithoutUserNestedInput
   games?: Prisma.GameUpdateManyWithoutUserNestedInput
@@ -254,7 +254,7 @@ export type UserUpdateInput = {
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   taps?: Prisma.TapUncheckedUpdateManyWithoutUserNestedInput
   games?: Prisma.GameUncheckedUpdateManyWithoutUserNestedInput
@@ -264,21 +264,21 @@ export type UserUncheckedUpdateInput = {
 export type UserCreateManyInput = {
   id?: string
   email: string
-  name: string
+  username: string
   password: string
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -290,21 +290,21 @@ export type UserScalarRelationFilter = {
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   password?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   password?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   password?: Prisma.SortOrder
 }
 
@@ -353,7 +353,7 @@ export type UserUpdateOneRequiredWithoutRolesNestedInput = {
 export type UserCreateWithoutTapsInput = {
   id?: string
   email: string
-  name: string
+  username: string
   password: string
   games?: Prisma.GameCreateNestedManyWithoutUserInput
   roles?: Prisma.UsersOnRolesCreateNestedManyWithoutUserInput
@@ -362,7 +362,7 @@ export type UserCreateWithoutTapsInput = {
 export type UserUncheckedCreateWithoutTapsInput = {
   id?: string
   email: string
-  name: string
+  username: string
   password: string
   games?: Prisma.GameUncheckedCreateNestedManyWithoutUserInput
   roles?: Prisma.UsersOnRolesUncheckedCreateNestedManyWithoutUserInput
@@ -387,7 +387,7 @@ export type UserUpdateToOneWithWhereWithoutTapsInput = {
 export type UserUpdateWithoutTapsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   games?: Prisma.GameUpdateManyWithoutUserNestedInput
   roles?: Prisma.UsersOnRolesUpdateManyWithoutUserNestedInput
@@ -396,7 +396,7 @@ export type UserUpdateWithoutTapsInput = {
 export type UserUncheckedUpdateWithoutTapsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   games?: Prisma.GameUncheckedUpdateManyWithoutUserNestedInput
   roles?: Prisma.UsersOnRolesUncheckedUpdateManyWithoutUserNestedInput
@@ -405,7 +405,7 @@ export type UserUncheckedUpdateWithoutTapsInput = {
 export type UserCreateWithoutGamesInput = {
   id?: string
   email: string
-  name: string
+  username: string
   password: string
   taps?: Prisma.TapCreateNestedManyWithoutUserInput
   roles?: Prisma.UsersOnRolesCreateNestedManyWithoutUserInput
@@ -414,7 +414,7 @@ export type UserCreateWithoutGamesInput = {
 export type UserUncheckedCreateWithoutGamesInput = {
   id?: string
   email: string
-  name: string
+  username: string
   password: string
   taps?: Prisma.TapUncheckedCreateNestedManyWithoutUserInput
   roles?: Prisma.UsersOnRolesUncheckedCreateNestedManyWithoutUserInput
@@ -439,7 +439,7 @@ export type UserUpdateToOneWithWhereWithoutGamesInput = {
 export type UserUpdateWithoutGamesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   taps?: Prisma.TapUpdateManyWithoutUserNestedInput
   roles?: Prisma.UsersOnRolesUpdateManyWithoutUserNestedInput
@@ -448,7 +448,7 @@ export type UserUpdateWithoutGamesInput = {
 export type UserUncheckedUpdateWithoutGamesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   taps?: Prisma.TapUncheckedUpdateManyWithoutUserNestedInput
   roles?: Prisma.UsersOnRolesUncheckedUpdateManyWithoutUserNestedInput
@@ -457,7 +457,7 @@ export type UserUncheckedUpdateWithoutGamesInput = {
 export type UserCreateWithoutRolesInput = {
   id?: string
   email: string
-  name: string
+  username: string
   password: string
   taps?: Prisma.TapCreateNestedManyWithoutUserInput
   games?: Prisma.GameCreateNestedManyWithoutUserInput
@@ -466,7 +466,7 @@ export type UserCreateWithoutRolesInput = {
 export type UserUncheckedCreateWithoutRolesInput = {
   id?: string
   email: string
-  name: string
+  username: string
   password: string
   taps?: Prisma.TapUncheckedCreateNestedManyWithoutUserInput
   games?: Prisma.GameUncheckedCreateNestedManyWithoutUserInput
@@ -491,7 +491,7 @@ export type UserUpdateToOneWithWhereWithoutRolesInput = {
 export type UserUpdateWithoutRolesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   taps?: Prisma.TapUpdateManyWithoutUserNestedInput
   games?: Prisma.GameUpdateManyWithoutUserNestedInput
@@ -500,7 +500,7 @@ export type UserUpdateWithoutRolesInput = {
 export type UserUncheckedUpdateWithoutRolesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   taps?: Prisma.TapUncheckedUpdateManyWithoutUserNestedInput
   games?: Prisma.GameUncheckedUpdateManyWithoutUserNestedInput
@@ -558,7 +558,7 @@ export type UserCountOutputTypeCountRolesArgs<ExtArgs extends runtime.Types.Exte
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
-  name?: boolean
+  username?: boolean
   password?: boolean
   taps?: boolean | Prisma.User$tapsArgs<ExtArgs>
   games?: boolean | Prisma.User$gamesArgs<ExtArgs>
@@ -569,25 +569,25 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
-  name?: boolean
+  username?: boolean
   password?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
-  name?: boolean
+  username?: boolean
   password?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
   email?: boolean
-  name?: boolean
+  username?: boolean
   password?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "username" | "password", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   taps?: boolean | Prisma.User$tapsArgs<ExtArgs>
   games?: boolean | Prisma.User$gamesArgs<ExtArgs>
@@ -607,7 +607,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     email: string
-    name: string
+    username: string
     password: string
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1037,7 +1037,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
-  readonly name: Prisma.FieldRef<"User", 'String'>
+  readonly username: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
 }
     
