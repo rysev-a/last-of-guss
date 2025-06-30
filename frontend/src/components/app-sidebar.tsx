@@ -10,39 +10,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {
-  AudioWaveform,
-  Calendar,
-  ChevronDown,
-  Command,
-  GalleryVerticalEnd,
-  Home,
-  Inbox,
-  Search,
-  Settings,
-} from "lucide-react";
-import { data, Link } from "react-router";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu.tsx";
+import { Info } from "lucide-react";
+import { Link } from "react-router";
+
 import { NavUser } from "@/components/nav-user.tsx";
 import { NavLogo } from "./nav-logo";
 
 const items = [
   {
-    title: "Login",
-    url: "/login",
-    icon: Home,
+    title: "Statistic",
+    url: "/statistic",
+    icon: Info,
   },
-  {
-    title: "SignUp",
-    url: "/signup",
-    icon: Inbox,
-  },
-
 ];
 
 export function AppSidebar() {
@@ -54,7 +33,7 @@ export function AppSidebar() {
         </SidebarHeader>
 
         <SidebarGroup>
-          <SidebarGroupLabel>Sections</SidebarGroupLabel>
+          <SidebarGroupLabel>Info</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -72,13 +51,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
-          user={{
-            email: "user@mail.com",
-            name: "example",
-            avatar: "image.png",
-          }}
-        />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );

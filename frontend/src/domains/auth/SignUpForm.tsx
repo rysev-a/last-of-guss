@@ -68,10 +68,12 @@ export function SignUpForm({
           username: values.username,
           password: values.password,
         })
-        .then(() => {
+        .then((response) => {
           toast.success("SignUp success", {
             description: "Registration complete, start play!",
           });
+          localStorage.setItem("token", response.data.token);
+          api.loadHeaders();
           navigate("/");
         })
         .catch(

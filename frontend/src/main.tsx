@@ -11,29 +11,18 @@ import LoginPage from "@/pages/LoginPage";
 import SignUpPage from "@/pages/SignUpPage";
 import GamePage from "@/pages/GamePage.tsx";
 import Layout from "@/components/layout.tsx";
-import api from "@/core/api.ts";
-import { loadAccount } from "@/core/store.ts";
-import { toast } from "sonner";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: Layout,
-    loader: async () => {
-      api.account().then((response) => {
-        loadAccount(response.data);
-        toast.success("Load account success", {
-          description: "Login in system complete, start play!",
-        });
-      });
-    },
     children: [
       {
         index: true,
         path: "/",
         element: <App />,
       },
-      { path: "game", Component: GamePage },
+      { path: "games", Component: GamePage },
     ],
   },
   { path: "/login", element: <LoginPage /> },

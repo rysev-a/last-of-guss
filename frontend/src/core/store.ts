@@ -9,7 +9,7 @@ export interface AccountStore {
   };
 }
 
-export const accountStore = new Store<AccountStore>({
+const defaultAccountState = () => ({
   isLoaded: false,
   isAuth: false,
   data: {
@@ -18,6 +18,8 @@ export const accountStore = new Store<AccountStore>({
   },
 });
 
+export const accountStore = new Store<AccountStore>(defaultAccountState());
+
 export const loadAccount = ({
   email,
   username,
@@ -25,10 +27,18 @@ export const loadAccount = ({
   email: string;
   username: string;
 }) => {
-  accountStore.setState((state) => {
+  accountStore.setState(() => {
     return {
-      ...state,
+      isLoaded: true,
+      isAuth: true,
       data: { email, username },
     };
   });
+};
+
+export const logoutAccount = () => {
+  accountStore.setState(() => ({
+    ...defaultAccountState(),
+    isLoaded: true,
+  }));
 };
