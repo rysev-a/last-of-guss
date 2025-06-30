@@ -9,15 +9,25 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import LoginPage from "@/pages/LoginPage";
 import SignUpPage from "@/pages/SignUpPage";
+import GamePage from "@/pages/GamePage.tsx";
+import Layout from "@/components/layout.tsx";
 
 const router = createBrowserRouter([
-  {
-    index: true,
-    path: "/",
-    element: <App />,
-  },
   { path: "/login", element: <LoginPage /> },
   { path: "/signup", element: <SignUpPage /> },
+
+  {
+    path: "/",
+    Component: Layout,
+    children: [
+      {
+        index: true,
+        path: "/",
+        element: <App />,
+      },
+      { path: "game", Component: GamePage },
+    ],
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(
