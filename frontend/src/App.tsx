@@ -26,13 +26,12 @@ function App() {
   }, [message]);
 
   return (
-    <div className="min-h-svh w-full p-6 md:p-10 space-y-4">
+    <div className="space-y-4">
       <Input
         value={message}
         onInput={(e) => {
           setMessage(e.currentTarget.value);
         }}
-        className="w-100"
       />
       <Button onClick={sendMessage}>send message</Button>
     </div>

@@ -94,7 +94,7 @@ export function SignUpForm({
           },
         );
     },
-    [signUpForm],
+    [signUpForm, navigate],
   );
 
   return (

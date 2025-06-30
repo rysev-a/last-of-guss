@@ -2,14 +2,27 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ws } from "@/core/websocket";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Gamepad } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Form } from "@/components/ui/form.tsx";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form.tsx";
+import { useCallback } from "react";
+import api from "@/core/api.ts";
+import { toast } from "sonner";
+
+interface ResponseErrorData {
+  email?: string;
+  password?: string;
+}
 
 const loginFormSchema = z.object({
   email: z.string().email(),
@@ -20,6 +33,8 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const navigate = useNavigate();
+
   const loginForm = useForm({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -27,6 +42,45 @@ export function LoginForm({
       password: "password123",
     },
   });
+
+  const onSubmit = useCallback(
+    (values: z.infer<typeof loginFormSchema>) => {
+      api
+        .login({
+          email: values.email,
+          password: values.password,
+        })
+        .then((response) => {
+          toast.success("Login success", {
+            description: "Login in system complete, start play!",
+          });
+
+          localStorage.setItem("token", response.data.token);
+          api.loadHeaders();
+          navigate("/");
+        })
+        .catch(
+          (error: {
+            response: {
+              data: ResponseErrorData;
+            };
+          }) => {
+            if (error.response.data.email) {
+              loginForm.setError("email", {
+                message: error.response.data.email as string,
+              });
+            }
+
+            if (error.response.data.password) {
+              loginForm.setError("password", {
+                message: error.response.data.password as string,
+              });
+            }
+          },
+        );
+    },
+    [loginForm, navigate],
+  );
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -44,27 +98,38 @@ export function LoginForm({
         </CardHeader>
         <CardContent>
           <Form {...loginForm}>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                ws.send(JSON.stringify({ message: "from login form" }));
-                console.log("send message");
-              }}
-            >
+            <form onSubmit={loginForm.handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-6">
-                <div className="grid gap-3">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="m@example.com"
-                    required
-                  />
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="password">Password</Label>
-                  <Input id="password" type="password" required />
-                </div>
+                <FormField
+                  control={loginForm.control}
+                  name="email"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input placeholder="m@example.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
+                />
+                <FormField
+                  control={loginForm.control}
+                  name="password"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl>
+                          <Input placeholder="password" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
+                />
                 <div className="flex flex-col gap-3">
                   <Button type="submit" className="w-full">
                     Login
