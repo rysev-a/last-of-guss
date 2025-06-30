@@ -22,7 +22,9 @@ const router = createBrowserRouter([
     loader: async () => {
       api.account().then((response) => {
         loadAccount(response.data);
-        toast.success("load account success");
+        toast.success("Load account success", {
+          description: "Login in system complete, start play!",
+        });
       });
     },
     children: [

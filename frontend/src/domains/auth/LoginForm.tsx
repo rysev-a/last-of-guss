@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/form.tsx";
 import { useCallback } from "react";
 import api from "@/core/api.ts";
-import { toast } from "sonner";
 
 interface ResponseErrorData {
   email?: string;
@@ -51,10 +50,6 @@ export function LoginForm({
           password: values.password,
         })
         .then((response) => {
-          toast.success("Login success", {
-            description: "Login in system complete, start play!",
-          });
-
           localStorage.setItem("token", response.data.token);
           api.loadHeaders();
           navigate("/");
