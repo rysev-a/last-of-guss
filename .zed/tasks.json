@@ -1,0 +1,12 @@
+[
+  {
+    "label": "Frontend",
+    "command": "pnpm run dev",
+    "cwd": "$ZED_WORKTREE_ROOT/frontend"
+  },
+  {
+    "label": "Backend",
+    "command": "pnpm run dev",
+    "cwd": "$ZED_WORKTREE_ROOT/backend"
+  }
+]
