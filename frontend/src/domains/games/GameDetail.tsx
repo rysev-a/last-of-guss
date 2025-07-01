@@ -37,7 +37,7 @@ export default function GameDetail({ game }: { game: GameType }) {
           );
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          toast.error(error.response.data.message || "server not responding");
         });
     }
   }, [account, game]);
