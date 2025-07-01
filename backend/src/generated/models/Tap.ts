@@ -19,8 +19,20 @@ export type TapModel = runtime.Types.Result.DefaultSelection<Prisma.$TapPayload>
 
 export type AggregateTap = {
   _count: TapCountAggregateOutputType | null
+  _avg: TapAvgAggregateOutputType | null
+  _sum: TapSumAggregateOutputType | null
   _min: TapMinAggregateOutputType | null
   _max: TapMaxAggregateOutputType | null
+}
+
+export type TapAvgAggregateOutputType = {
+  tapNumber: number | null
+  value: number | null
+}
+
+export type TapSumAggregateOutputType = {
+  tapNumber: number | null
+  value: number | null
 }
 
 export type TapMinAggregateOutputType = {
@@ -29,6 +41,8 @@ export type TapMinAggregateOutputType = {
   updatedAt: Date | null
   userId: string | null
   gameId: string | null
+  tapNumber: number | null
+  value: number | null
 }
 
 export type TapMaxAggregateOutputType = {
@@ -37,6 +51,8 @@ export type TapMaxAggregateOutputType = {
   updatedAt: Date | null
   userId: string | null
   gameId: string | null
+  tapNumber: number | null
+  value: number | null
 }
 
 export type TapCountAggregateOutputType = {
@@ -45,9 +61,21 @@ export type TapCountAggregateOutputType = {
   updatedAt: number
   userId: number
   gameId: number
+  tapNumber: number
+  value: number
   _all: number
 }
 
+
+export type TapAvgAggregateInputType = {
+  tapNumber?: true
+  value?: true
+}
+
+export type TapSumAggregateInputType = {
+  tapNumber?: true
+  value?: true
+}
 
 export type TapMinAggregateInputType = {
   id?: true
@@ -55,6 +83,8 @@ export type TapMinAggregateInputType = {
   updatedAt?: true
   userId?: true
   gameId?: true
+  tapNumber?: true
+  value?: true
 }
 
 export type TapMaxAggregateInputType = {
@@ -63,6 +93,8 @@ export type TapMaxAggregateInputType = {
   updatedAt?: true
   userId?: true
   gameId?: true
+  tapNumber?: true
+  value?: true
 }
 
 export type TapCountAggregateInputType = {
@@ -71,6 +103,8 @@ export type TapCountAggregateInputType = {
   updatedAt?: true
   userId?: true
   gameId?: true
+  tapNumber?: true
+  value?: true
   _all?: true
 }
 
@@ -112,6 +146,18 @@ export type TapAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: TapAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: TapSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: TapMinAggregateInputType
@@ -142,6 +188,8 @@ export type TapGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   _count?: TapCountAggregateInputType | true
+  _avg?: TapAvgAggregateInputType
+  _sum?: TapSumAggregateInputType
   _min?: TapMinAggregateInputType
   _max?: TapMaxAggregateInputType
 }
@@ -152,7 +200,11 @@ export type TapGroupByOutputType = {
   updatedAt: Date
   userId: string
   gameId: string
+  tapNumber: number
+  value: number
   _count: TapCountAggregateOutputType | null
+  _avg: TapAvgAggregateOutputType | null
+  _sum: TapSumAggregateOutputType | null
   _min: TapMinAggregateOutputType | null
   _max: TapMaxAggregateOutputType | null
 }
@@ -181,6 +233,8 @@ export type TapWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Tap"> | Date | string
   userId?: Prisma.StringFilter<"Tap"> | string
   gameId?: Prisma.StringFilter<"Tap"> | string
+  tapNumber?: Prisma.IntFilter<"Tap"> | number
+  value?: Prisma.IntFilter<"Tap"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   game?: Prisma.XOR<Prisma.GameScalarRelationFilter, Prisma.GameWhereInput>
 }
@@ -191,6 +245,8 @@ export type TapOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   gameId?: Prisma.SortOrder
+  tapNumber?: Prisma.SortOrder
+  value?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   game?: Prisma.GameOrderByWithRelationInput
 }
@@ -204,6 +260,8 @@ export type TapWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Tap"> | Date | string
   userId?: Prisma.StringFilter<"Tap"> | string
   gameId?: Prisma.StringFilter<"Tap"> | string
+  tapNumber?: Prisma.IntFilter<"Tap"> | number
+  value?: Prisma.IntFilter<"Tap"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   game?: Prisma.XOR<Prisma.GameScalarRelationFilter, Prisma.GameWhereInput>
 }, "id">
@@ -214,9 +272,13 @@ export type TapOrderByWithAggregationInput = {
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   gameId?: Prisma.SortOrder
+  tapNumber?: Prisma.SortOrder
+  value?: Prisma.SortOrder
   _count?: Prisma.TapCountOrderByAggregateInput
+  _avg?: Prisma.TapAvgOrderByAggregateInput
   _max?: Prisma.TapMaxOrderByAggregateInput
   _min?: Prisma.TapMinOrderByAggregateInput
+  _sum?: Prisma.TapSumOrderByAggregateInput
 }
 
 export type TapScalarWhereWithAggregatesInput = {
@@ -228,12 +290,16 @@ export type TapScalarWhereWithAggregatesInput = {
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Tap"> | Date | string
   userId?: Prisma.StringWithAggregatesFilter<"Tap"> | string
   gameId?: Prisma.StringWithAggregatesFilter<"Tap"> | string
+  tapNumber?: Prisma.IntWithAggregatesFilter<"Tap"> | number
+  value?: Prisma.IntWithAggregatesFilter<"Tap"> | number
 }
 
 export type TapCreateInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  tapNumber: number
+  value: number
   user: Prisma.UserCreateNestedOneWithoutTapsInput
   game: Prisma.GameCreateNestedOneWithoutTapsInput
 }
@@ -244,12 +310,16 @@ export type TapUncheckedCreateInput = {
   updatedAt?: Date | string
   userId: string
   gameId: string
+  tapNumber: number
+  value: number
 }
 
 export type TapUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tapNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  value?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutTapsNestedInput
   game?: Prisma.GameUpdateOneRequiredWithoutTapsNestedInput
 }
@@ -260,6 +330,8 @@ export type TapUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   gameId?: Prisma.StringFieldUpdateOperationsInput | string
+  tapNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  value?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TapCreateManyInput = {
@@ -268,12 +340,16 @@ export type TapCreateManyInput = {
   updatedAt?: Date | string
   userId: string
   gameId: string
+  tapNumber: number
+  value: number
 }
 
 export type TapUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tapNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  value?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TapUncheckedUpdateManyInput = {
@@ -282,6 +358,8 @@ export type TapUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   gameId?: Prisma.StringFieldUpdateOperationsInput | string
+  tapNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  value?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TapCountOrderByAggregateInput = {
@@ -290,6 +368,13 @@ export type TapCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   gameId?: Prisma.SortOrder
+  tapNumber?: Prisma.SortOrder
+  value?: Prisma.SortOrder
+}
+
+export type TapAvgOrderByAggregateInput = {
+  tapNumber?: Prisma.SortOrder
+  value?: Prisma.SortOrder
 }
 
 export type TapMaxOrderByAggregateInput = {
@@ -298,6 +383,8 @@ export type TapMaxOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   gameId?: Prisma.SortOrder
+  tapNumber?: Prisma.SortOrder
+  value?: Prisma.SortOrder
 }
 
 export type TapMinOrderByAggregateInput = {
@@ -306,6 +393,13 @@ export type TapMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   gameId?: Prisma.SortOrder
+  tapNumber?: Prisma.SortOrder
+  value?: Prisma.SortOrder
+}
+
+export type TapSumOrderByAggregateInput = {
+  tapNumber?: Prisma.SortOrder
+  value?: Prisma.SortOrder
 }
 
 export type TapListRelationFilter = {
@@ -324,6 +418,14 @@ export type StringFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type TapCreateNestedManyWithoutGameInput = {
@@ -414,6 +516,8 @@ export type TapCreateWithoutGameInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  tapNumber: number
+  value: number
   user: Prisma.UserCreateNestedOneWithoutTapsInput
 }
 
@@ -422,6 +526,8 @@ export type TapUncheckedCreateWithoutGameInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
+  tapNumber: number
+  value: number
 }
 
 export type TapCreateOrConnectWithoutGameInput = {
@@ -459,12 +565,16 @@ export type TapScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Tap"> | Date | string
   userId?: Prisma.StringFilter<"Tap"> | string
   gameId?: Prisma.StringFilter<"Tap"> | string
+  tapNumber?: Prisma.IntFilter<"Tap"> | number
+  value?: Prisma.IntFilter<"Tap"> | number
 }
 
 export type TapCreateWithoutUserInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  tapNumber: number
+  value: number
   game: Prisma.GameCreateNestedOneWithoutTapsInput
 }
 
@@ -473,6 +583,8 @@ export type TapUncheckedCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   gameId: string
+  tapNumber: number
+  value: number
 }
 
 export type TapCreateOrConnectWithoutUserInput = {
@@ -506,12 +618,16 @@ export type TapCreateManyGameInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
+  tapNumber: number
+  value: number
 }
 
 export type TapUpdateWithoutGameInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tapNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  value?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutTapsNestedInput
 }
 
@@ -520,6 +636,8 @@ export type TapUncheckedUpdateWithoutGameInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  tapNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  value?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TapUncheckedUpdateManyWithoutGameInput = {
@@ -527,6 +645,8 @@ export type TapUncheckedUpdateManyWithoutGameInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  tapNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  value?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TapCreateManyUserInput = {
@@ -534,12 +654,16 @@ export type TapCreateManyUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   gameId: string
+  tapNumber: number
+  value: number
 }
 
 export type TapUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tapNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  value?: Prisma.IntFieldUpdateOperationsInput | number
   game?: Prisma.GameUpdateOneRequiredWithoutTapsNestedInput
 }
 
@@ -548,6 +672,8 @@ export type TapUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gameId?: Prisma.StringFieldUpdateOperationsInput | string
+  tapNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  value?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TapUncheckedUpdateManyWithoutUserInput = {
@@ -555,6 +681,8 @@ export type TapUncheckedUpdateManyWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gameId?: Prisma.StringFieldUpdateOperationsInput | string
+  tapNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  value?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -565,6 +693,8 @@ export type TapSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   updatedAt?: boolean
   userId?: boolean
   gameId?: boolean
+  tapNumber?: boolean
+  value?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tap"]>
@@ -575,6 +705,8 @@ export type TapSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   updatedAt?: boolean
   userId?: boolean
   gameId?: boolean
+  tapNumber?: boolean
+  value?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tap"]>
@@ -585,6 +717,8 @@ export type TapSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   updatedAt?: boolean
   userId?: boolean
   gameId?: boolean
+  tapNumber?: boolean
+  value?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tap"]>
@@ -595,9 +729,11 @@ export type TapSelectScalar = {
   updatedAt?: boolean
   userId?: boolean
   gameId?: boolean
+  tapNumber?: boolean
+  value?: boolean
 }
 
-export type TapOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "userId" | "gameId", ExtArgs["result"]["tap"]>
+export type TapOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "userId" | "gameId" | "tapNumber" | "value", ExtArgs["result"]["tap"]>
 export type TapInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
@@ -623,6 +759,8 @@ export type $TapPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     updatedAt: Date
     userId: string
     gameId: string
+    tapNumber: number
+    value: number
   }, ExtArgs["result"]["tap"]>
   composites: {}
 }
@@ -1053,6 +1191,8 @@ export interface TapFieldRefs {
   readonly updatedAt: Prisma.FieldRef<"Tap", 'DateTime'>
   readonly userId: Prisma.FieldRef<"Tap", 'String'>
   readonly gameId: Prisma.FieldRef<"Tap", 'String'>
+  readonly tapNumber: Prisma.FieldRef<"Tap", 'Int'>
+  readonly value: Prisma.FieldRef<"Tap", 'Int'>
 }
     
 

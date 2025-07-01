@@ -12,9 +12,17 @@ export interface UserGameType {
   user: UserType;
 }
 
+export interface TapType {
+  value: number;
+  tapNumber: number;
+  userId: string;
+  gameId: string;
+}
+
 export interface GameType {
   id: string;
   title: string;
   users: UserGameType[];
+  taps: TapType[];
   createdAt: string;
 }

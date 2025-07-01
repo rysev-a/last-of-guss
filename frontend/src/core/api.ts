@@ -68,6 +68,10 @@ class Api {
   joinToGame(id: string) {
     return this.httpClient.post(`${this.baseUrl}/games/${id}/join`);
   }
+
+  tap(id: string) {
+    return this.httpClient.post(`${this.baseUrl}/games/${id}/tap`);
+  }
 }
 
 const api = new Api(axios, "/api/v1");

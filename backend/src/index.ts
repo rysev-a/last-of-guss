@@ -20,7 +20,7 @@ fastify.register(auth, { prefix: "/api/v1/auth" });
 fastify.register(dev, { prefix: "/api/v1/dev" });
 fastify.register(game, { prefix: "/api/v1/games" });
 
-fastify.listen({ port: 8080 }, async (err, address) => {
+fastify.listen({ host: "0.0.0.0", port: 8080 }, async (err, address) => {
   await initDatabaseConnection();
 
   console.log(`Connect to database success`);

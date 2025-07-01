@@ -139,7 +139,7 @@ export const checkAuth =
   (fastify: FastifyInstance) =>
   async (request: FastifyRequest, reply: FastifyReply) => {
     if (
-      ["/api/v1/auth/login", "/api/v1/auth/singup", "/api/v1/games/ws"].indexOf(
+      ["/api/v1/auth/login", "/api/v1/auth/signup", "/api/v1/games/ws"].indexOf(
         request.url,
       ) == -1
     ) {

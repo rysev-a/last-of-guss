@@ -9,23 +9,44 @@ export const getGameStatus = (
   currentTime: dayjs.Dayjs,
   gameSettings: GameSettings,
 ): GameStatusType => {
-  const gameStart = dayjs(game.createdAt).add(
-    gameSettings.COOLDOWN_DURATION,
-    "seconds",
-  );
+  const calculatedCountdown =
+    dayjs(game.createdAt)
+      .add(gameSettings.COOLDOWN_DURATION, "seconds")
+      .unix() - currentTime.unix();
 
-  const gameEnd = dayjs(game.createdAt).add(
-    gameSettings.ROUND_DURATION + gameSettings.COOLDOWN_DURATION,
-    "seconds",
-  );
-
-  if (currentTime < gameStart) {
+  if (calculatedCountdown > 0) {
     return "Cooldown";
   }
+  return calculatedCountdown + gameSettings.ROUND_DURATION > 0
+    ? "Active"
+    : "Completed";
+};
 
-  if (currentTime < gameEnd) {
-    return "Active";
-  }
+export const calculateUserScore = (userId: string, game: GameType): number => {
+  return game.taps
+    .filter((tap) => tap.userId === userId)
+    .reduce((result, tap) => {
+      return result + tap.value;
+    }, 0);
+};
 
-  return "Completed";
+export const getWinner = (game: GameType) => {
+  const winner = game.users.reduce(
+    (winner, user) => {
+      const userScore = calculateUserScore(user.userId, game);
+
+      if (userScore > winner.total) {
+        return {
+          id: user.userId,
+          total: userScore,
+          username: user.user.username,
+        };
+      }
+
+      return winner;
+    },
+    { id: "", total: 0, username: "game is empty" },
+  );
+
+  return winner.username;
 };

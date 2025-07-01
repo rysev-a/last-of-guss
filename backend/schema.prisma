@@ -16,6 +16,8 @@ model Tap {
   userId    String
   game      Game     @relation(fields: [gameId], references: [id])
   gameId    String
+  tapNumber Int
+  value     Int
 }
 
 model Game {
