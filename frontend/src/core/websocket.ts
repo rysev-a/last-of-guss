@@ -1,1 +1,3 @@
-export const ws = new WebSocket(`ws://192.168.0.110:8080/api/v1/games/ws`);
+export const ws = new WebSocket(
+  `ws://last-of-guss.service-laboratory.online/api/v1/games/ws`,
+);
