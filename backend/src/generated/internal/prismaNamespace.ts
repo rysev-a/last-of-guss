@@ -398,7 +398,8 @@ export const ModelName = {
   Game: 'Game',
   Role: 'Role',
   User: 'User',
-  UsersOnRoles: 'UsersOnRoles'
+  UsersOnRoles: 'UsersOnRoles',
+  UsersOnGames: 'UsersOnGames'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -414,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "tap" | "game" | "role" | "user" | "usersOnRoles"
+    modelProps: "tap" | "game" | "role" | "user" | "usersOnRoles" | "usersOnGames"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -788,6 +789,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UsersOnGames: {
+      payload: Prisma.$UsersOnGamesPayload<ExtArgs>
+      fields: Prisma.UsersOnGamesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UsersOnGamesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UsersOnGamesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UsersOnGamesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UsersOnGamesPayload>
+        }
+        findFirst: {
+          args: Prisma.UsersOnGamesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UsersOnGamesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UsersOnGamesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UsersOnGamesPayload>
+        }
+        findMany: {
+          args: Prisma.UsersOnGamesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UsersOnGamesPayload>[]
+        }
+        create: {
+          args: Prisma.UsersOnGamesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UsersOnGamesPayload>
+        }
+        createMany: {
+          args: Prisma.UsersOnGamesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UsersOnGamesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UsersOnGamesPayload>[]
+        }
+        delete: {
+          args: Prisma.UsersOnGamesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UsersOnGamesPayload>
+        }
+        update: {
+          args: Prisma.UsersOnGamesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UsersOnGamesPayload>
+        }
+        deleteMany: {
+          args: Prisma.UsersOnGamesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UsersOnGamesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UsersOnGamesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UsersOnGamesPayload>[]
+        }
+        upsert: {
+          args: Prisma.UsersOnGamesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UsersOnGamesPayload>
+        }
+        aggregate: {
+          args: Prisma.UsersOnGamesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUsersOnGames>
+        }
+        groupBy: {
+          args: Prisma.UsersOnGamesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UsersOnGamesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UsersOnGamesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UsersOnGamesCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -843,8 +918,7 @@ export const GameScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   title: 'title',
-  content: 'content',
-  userId: 'userId'
+  content: 'content'
 } as const
 
 export type GameScalarFieldEnum = (typeof GameScalarFieldEnum)[keyof typeof GameScalarFieldEnum]
@@ -875,6 +949,15 @@ export const UsersOnRolesScalarFieldEnum = {
 } as const
 
 export type UsersOnRolesScalarFieldEnum = (typeof UsersOnRolesScalarFieldEnum)[keyof typeof UsersOnRolesScalarFieldEnum]
+
+
+export const UsersOnGamesScalarFieldEnum = {
+  userId: 'userId',
+  gameId: 'gameId',
+  assignedAt: 'assignedAt'
+} as const
+
+export type UsersOnGamesScalarFieldEnum = (typeof UsersOnGamesScalarFieldEnum)[keyof typeof UsersOnGamesScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1028,6 +1111,7 @@ export type GlobalOmitConfig = {
   role?: Prisma.RoleOmit
   user?: Prisma.UserOmit
   usersOnRoles?: Prisma.UsersOnRolesOmit
+  usersOnGames?: Prisma.UsersOnGamesOmit
 }
 
 /* Types for Logging */

@@ -1,4 +1,5 @@
 import axios, { Axios } from "axios";
+import type { GameType } from "@/domains/types";
 
 export interface SignUpData {
   email: string;
@@ -33,6 +34,7 @@ class Api {
 
   resetHeaderToken() {
     delete this.httpClient.defaults.headers.common["Authorization"];
+    localStorage.clear();
   }
 
   signUp(signUpData: SignUpData) {
@@ -45,6 +47,26 @@ class Api {
 
   account() {
     return this.httpClient.get(`${this.baseUrl}/auth/account`);
+  }
+
+  getGameSettings() {
+    return this.httpClient.get(`${this.baseUrl}/games/settings`);
+  }
+
+  getGameList() {
+    return this.httpClient.get<GameType[]>(`${this.baseUrl}/games`);
+  }
+
+  getGameDetail(id: string) {
+    return this.httpClient.get<GameType>(`${this.baseUrl}/games/${id}`);
+  }
+
+  createGame({ title }: { title: string }) {
+    return this.httpClient.post(`${this.baseUrl}/games`, { title });
+  }
+
+  joinToGame(id: string) {
+    return this.httpClient.post(`${this.baseUrl}/games/${id}/join`);
   }
 }
 

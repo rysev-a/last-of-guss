@@ -64,5 +64,10 @@ export type User = Prisma.UserModel
  * 
  */
 export type UsersOnRoles = Prisma.UsersOnRolesModel
+/**
+ * Model UsersOnGames
+ * 
+ */
+export type UsersOnGames = Prisma.UsersOnGamesModel
 
 

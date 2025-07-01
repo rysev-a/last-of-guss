@@ -9,7 +9,7 @@ import { Outlet } from "react-router";
 import SidebarBreadcrumbs from "@/components/sidebar-breadcrumbs.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 import { useStore } from "@tanstack/react-store";
-import { accountStore, loadAccount } from "@/core/store.ts";
+import { accountStore, loadAccount, loadGameSettings } from "@/core/store.ts";
 import api from "@/core/api.ts";
 import { toast } from "sonner";
 import { useEffect } from "react";
@@ -19,13 +19,19 @@ export default function Layout() {
 
   useEffect(() => {
     if (!account.isAuth) {
-      console.log(account.isAuth);
-      api.account().then((response) => {
-        loadAccount(response.data);
-        toast.success("Load account success", {
-          description: "Login in system complete, start play!",
+      api
+        .account()
+        .then((response) => {
+          loadAccount(response.data);
+          toast.success("Load account success", {
+            description: "Login in system complete, start play!",
+          });
+        })
+        .then(() => {
+          api.getGameSettings().then((response) => {
+            loadGameSettings(response.data);
+          });
         });
-      });
     }
   }, [account.isAuth]);
 

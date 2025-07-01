@@ -1,11 +1,12 @@
 import {
   FastifyInstance,
+  FastifyReply,
   FastifyRequest,
   HookHandlerDoneFunction,
 } from "fastify";
+import bcrypt from "bcrypt";
 
 import { prisma } from "../core/database";
-import bcrypt from "bcrypt";
 
 interface SignUpData {
   email: string;
@@ -23,19 +24,6 @@ const auth = (
   _: any,
   done: HookHandlerDoneFunction,
 ) => {
-  fastify.addHook("onRequest", async (request, reply) => {
-    if (request.headers.authorization) {
-      const decodedTokenAlt = fastify.jwt.decode(
-        request.headers.authorization as string,
-        {
-          complete: false,
-        },
-      );
-
-      request.user = JSON.stringify(decodedTokenAlt);
-    }
-  });
-
   fastify.post<{ Body: SignUpData }>("/signup", async (request, reply) => {
     if (await prisma.user.findFirst({ where: { email: request.body.email } })) {
       reply.status(400).send({ email: "email already exist" });
@@ -61,6 +49,22 @@ const auth = (
         email: request.body.email,
         username: request.body.username,
         password: hashedPassword as string,
+        roles: {
+          create: [
+            {
+              role: {
+                create: {
+                  name: request.body.username,
+                },
+              },
+            },
+          ],
+        },
+      },
+      include: {
+        roles: {
+          include: { role: true },
+        },
       },
     });
 
@@ -68,33 +72,40 @@ const auth = (
       id: user.id,
       email: user.email,
       username: user.username,
+      roles: user.roles,
     });
     reply.send({ token });
   });
 
   fastify.post<{ Body: LoginData }>("/login", async (request, reply) => {
-    const emailUser = await prisma.user.findFirst({
+    const loginUser = await prisma.user.findFirst({
       where: { email: request.body.email },
+      include: {
+        roles: {
+          include: { role: true },
+        },
+      },
     });
 
-    if (!emailUser) {
+    if (!loginUser) {
       reply.status(400).send({ email: "email not found" });
     }
 
-    if (emailUser) {
+    if (loginUser) {
       if (
         !(await bcrypt.compare(
           request.body.password,
-          emailUser.password as string,
+          loginUser.password as string,
         ))
       ) {
         reply.status(400).send({ password: "wrong password" });
       }
 
       const token = fastify.jwt.sign({
-        id: emailUser.id,
-        email: emailUser.email,
-        username: emailUser.username,
+        id: loginUser.id,
+        email: loginUser.email,
+        username: loginUser.username,
+        roles: loginUser.roles,
       });
       reply.send({
         token,
@@ -106,10 +117,45 @@ const auth = (
     if (request.user) {
       return reply.send(JSON.parse(request.user as string));
     }
-    reply.status(400).send({ message: "not autorized" });
+    reply.status(400).send({ message: "not authorized" });
+  });
+
+  fastify.get("/users", async (request, reply) => {
+    reply.send(
+      await prisma.user.findMany({
+        include: {
+          roles: {
+            include: { role: true },
+          },
+        },
+      }),
+    );
   });
 
   done();
 };
+
+export const checkAuth =
+  (fastify: FastifyInstance) =>
+  async (request: FastifyRequest, reply: FastifyReply) => {
+    if (
+      ["/api/v1/auth/login", "/api/v1/auth/singup", "/api/v1/games/ws"].indexOf(
+        request.url,
+      ) == -1
+    ) {
+      if (request.headers.authorization) {
+        const decodedTokenAlt = fastify.jwt.decode(
+          request.headers.authorization as string,
+          {
+            complete: false,
+          },
+        );
+
+        request.user = JSON.stringify(decodedTokenAlt);
+      } else {
+        reply.status(400).send({ message: "not authorized" });
+      }
+    }
+  };
 
 export default auth;
