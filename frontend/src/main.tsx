@@ -3,9 +3,6 @@ import "./index.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "@/components/ui/sonner";
-
-import App from "./App.tsx";
-
 import { createBrowserRouter, RouterProvider } from "react-router";
 import LoginPage from "@/pages/LoginPage";
 import SignUpPage from "@/pages/SignUpPage";
@@ -21,12 +18,7 @@ const router = createBrowserRouter([
     path: "/",
     Component: Layout,
     children: [
-      {
-        index: true,
-        path: "/",
-        element: <App />,
-      },
-      { path: "games", Component: GameListPage },
+      { path: "/", Component: GameListPage },
       { path: "games/new", Component: GameCreatePage },
       { path: "games/:id", Component: GameDetailPage },
     ],

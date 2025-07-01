@@ -4,7 +4,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 
 import SidebarBreadcrumbs from "@/components/sidebar-breadcrumbs.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
@@ -16,6 +16,7 @@ import { useEffect } from "react";
 
 export default function Layout() {
   const account = useStore(accountStore, (state) => state);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!account.isAuth) {
@@ -31,6 +32,10 @@ export default function Layout() {
           api.getGameSettings().then((response) => {
             loadGameSettings(response.data);
           });
+        })
+        .catch(() => {
+          toast.error("user not loaded");
+          navigate("/login");
         });
     }
   }, [account.isAuth]);

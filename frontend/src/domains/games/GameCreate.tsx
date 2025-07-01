@@ -47,7 +47,7 @@ export default function GameCreate() {
       mutation
         .mutateAsync(values)
         .then(() => {
-          navigate("/games");
+          navigate("/");
         })
         .catch((error) => {
           if (error.response.data.title) {
