@@ -53,10 +53,10 @@ export function SignUpForm({
   const signUpForm = useForm({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
-      email: "m@example.com",
-      username: "nikita",
-      password: "password123",
-      confirmPassword: "password123",
+      email: "",
+      username: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
