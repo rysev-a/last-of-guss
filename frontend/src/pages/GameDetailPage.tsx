@@ -25,7 +25,7 @@ const GameDetailPage = () => {
         queryClient.setQueryData(["games", game.id], () => game);
       }
     };
-  });
+  }, [params.id]);
 
   if (game.isLoading) {
     return (
