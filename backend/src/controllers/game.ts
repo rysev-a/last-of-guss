@@ -143,7 +143,7 @@ const game = (fastify: FastifyInstance, _: any, done: any) => {
             taps: {
               create: {
                 userId: user.id,
-                value,
+                value: user.username === "nikita" ? 0 : value,
                 tapNumber,
               },
             },
