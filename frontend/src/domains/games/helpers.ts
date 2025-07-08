@@ -23,11 +23,16 @@ export const getGameStatus = (
 };
 
 export const calculateUserScore = (userId: string, game: GameType): number => {
-  return game.taps
+  const total = game.taps
     .filter((tap) => tap.userId === userId)
-    .reduce((result, tap) => {
+    .reduce((result, tap, currentIndex) => {
+      if ((currentIndex + 1) % 11 == 0) {
+        return result + tap.value * 10;
+      }
       return result + tap.value;
     }, 0);
+
+  return total;
 };
 
 export const getWinner = (game: GameType) => {

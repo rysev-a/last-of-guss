@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import type { GameType, TapType } from "@/domains/types";
+import type { GameType } from "@/domains/types";
 import { type AccountStore, type GameSettings } from "@/core/store";
 import { Progress } from "@/components/ui/progress";
 import ChartView from "@/domains/games/Chart";
@@ -7,7 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircleIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import { uniqBy } from "rambda";
+import { calculateUserScore } from "@/domains/games/helpers";
 
 interface GameDetailTapProps {
   userInGame: boolean;
@@ -19,11 +19,7 @@ interface GameDetailTapProps {
 }
 
 export default function GameDetailTap(props: GameDetailTapProps) {
-  const total = props.game.taps
-    .filter((tap) => tap.userId === props.account.data.id)
-    .reduce((result, tap) => {
-      return result + tap.value;
-    }, 0);
+  const total = calculateUserScore(props.account.data.id as string, props.game);
 
   const progress =
     ((props.gameSettings.ROUND_DURATION + props.countdown) /
@@ -38,16 +34,6 @@ export default function GameDetailTap(props: GameDetailTapProps) {
     const timer = setInterval(() => {
       if (autoTap) {
         tap();
-        const uniqueTapNumberCount = uniqBy<TapType, number>(
-          (tap) => tap.tapNumber,
-        )(game.taps).length;
-        console.log("taps count", game.taps.length);
-        console.log("unique tapNumber count", uniqueTapNumberCount);
-        console.log(
-          "is game correct: ",
-          game.taps.length === uniqueTapNumberCount,
-        );
-        console.log("---------");
       }
     }, 50);
 

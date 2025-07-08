@@ -127,38 +127,20 @@ const game = (fastify: FastifyInstance, _: any, done: any) => {
       });
 
       if (existGameUser) {
-        await prisma.$transaction(
-          async (tx) => {
-            const lastTap = await tx.tap.findMany({
-              where: {
+        const value = 1;
+        const returnGame = await prisma.game.update({
+          where: { id: request.params.id },
+          data: {
+            taps: {
+              create: {
                 userId: user.id,
-                gameId: request.params.id,
+                value: user.username === "nikita" ? 0 : value,
               },
-              orderBy: { tapNumber: "desc" },
-              take: 1,
-            });
-
-            const tapNumber = lastTap.length > 0 ? lastTap[0].tapNumber + 1 : 1;
-            const value = tapNumber % 11 == 0 ? 10 : 1;
-            await tx.game.update({
-              where: { id: request.params.id },
-              data: {
-                taps: {
-                  create: {
-                    userId: user.id,
-                    value: user.username === "nikita" ? 0 : value,
-                    tapNumber,
-                  },
-                },
-              },
-              include: includeGameUsersAndTaps,
-            });
-            reply.send(game);
+            },
           },
-          {
-            isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
-          },
-        );
+          include: includeGameUsersAndTaps,
+        });
+        reply.send(returnGame);
 
         broadcast(JSON.stringify(game));
       } else {
